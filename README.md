@@ -24,7 +24,7 @@ This is an example of how DevOps engineers automate build, test, and release wor
 ---
 
 ## Workflow Diagram
-```mermaid
+
 graph TD
 A[Commit & Push to GitHub] --> B[GitHub Actions CI/CD]
 B --> C[Run Unit Tests with Pytest]
