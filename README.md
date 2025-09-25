@@ -1,6 +1,6 @@
 # CI/CD Pipeline with GitHub Actions & Docker (Flask App Example)
 
-[![CI](https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker/actions/workflows/ci.yml/badge.svg)](https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker/actions/workflows/ci.yml)
+(https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker/actions/workflows/ci.yml/badge.svg)(https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker/actions/workflows/ci.yml)
 
 ## Overview
 This project demonstrates how to build a **CI/CD pipeline** using **GitHub Actions** and **Docker**.  
