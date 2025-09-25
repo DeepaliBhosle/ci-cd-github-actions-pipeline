@@ -12,7 +12,6 @@ It includes:
 
 This is an example of how DevOps engineers automate build, test, and release workflows without manual effort.
 
----
 
 ## Tech Stack
 - **Language:** Python (Flask)
@@ -21,16 +20,6 @@ This is an example of how DevOps engineers automate build, test, and release wor
 - **Testing:** Pytest
 - **Registry:** GitHub Container Registry (GHCR)
 
----
-
-## Workflow Diagram
-
-graph TD
-A[Commit & Push to GitHub] --> B[GitHub Actions CI/CD]
-B --> C[Run Unit Tests with Pytest]
-C --> D[Build Docker Image]
-D --> E[Push Image to GitHub Container Registry]
-E --> F[Dep]()
 
 ## Project Structure
 ci-cd-pipeline-docker/
