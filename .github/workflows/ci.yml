@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI Pipeline (Dockerized)
 
 on:
   push:
@@ -7,39 +7,26 @@ on:
     branches: [ "main" ]
 
 jobs:
-  lint-build-test:
+  dockerized-ci:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️ Checkout code
+      # 1️ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️ Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-
-      # 3️ Install dependencies
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install black flake8 pytest
-
-      # 4️ Linting: flake8
-      - name: Run flake8
-        run: flake8 app tests
-
-      # 5️ Code formatting check: black
-      - name: Check code formatting with black
-        run: black --check app tests
-
-      # 6️ Build Docker image
+      # 2️ Build Docker image (includes app + dev tools)
       - name: Build Docker image
         run: docker build -t myapp .
 
-      # 7️ Run tests inside Docker
-      - name: Run tests inside Docker
+      # 3️ Run linting (flake8) inside Docker
+      - name: Lint code with flake8
+        run: docker run --rm myapp flake8 app tests
+
+      # 4️ Check code formatting (black) inside Docker
+      - name: Check formatting with black
+        run: docker run --rm myapp black --check app tests
+
+      # 5️ Run tests (pytest) inside Docker
+      - name: Run tests with pytest
         run: docker run --rm myapp pytest --maxfail=1 --disable-warnings -q
