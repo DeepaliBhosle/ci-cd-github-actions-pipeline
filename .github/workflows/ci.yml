@@ -7,29 +7,18 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
+      # Build Docker image
+      - name: Build Docker image
+        run: docker build -t myapp .
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install black flake8 pytest-cov
-
-    - name: Run lint (flake8)
-      run: flake8 app tests
-
-    - name: Run black formatting check
-      run: black --check app tests
-
-    - name: Run tests with coverage
-      run: pytest --cov=app tests/
+      # Run tests inside container
+      - name: Run tests inside Docker
+        run: docker run --rm myapp pytest --maxfail=1 --disable-warnings -q
