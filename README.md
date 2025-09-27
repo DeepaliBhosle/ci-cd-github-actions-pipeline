@@ -1,70 +1,93 @@
-# CI/CD Pipeline with GitHub Actions & Docker (Flask App Example)
+# CI/CD Flask Docker Pipeline
 
-(https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker/actions/workflows/ci.yml/badge.svg)(https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/flask-3.1.2-green)](https://flask.palletsprojects.com/)
+[![Docker](https://img.shields.io/badge/docker-latest-blue)](https://www.docker.com/)
+[![GitHub Actions](https://github.com/DeepaliBhosle/ci-cd-github-actions-pipeline/workflows/CI/badge.svg)](https://github.com/DeepaliBhosle/ci-cd-github-actions-pipeline/actions)
 
-## Overview
-This project demonstrates how to build a **CI/CD pipeline** using **GitHub Actions** and **Docker**.  
-It includes:
-- Automated testing with **Pytest**
-- Building a production-ready Docker image
-- Pushing the image to **GitHub Container Registry (GHCR)**
-- Deployable containerized Flask application
+## Project Overview ##
 
-This is an example of how DevOps engineers automate build, test, and release workflows without manual effort.
+This project demonstrates a complete CI/CD pipeline for a Python Flask application using:
 
+- Flask for the web application.
+- Docker for containerization.
+- GitHub Actions for CI/CD automation.
+- pytest & pytest-cov for testing and coverage.
 
-## Tech Stack
-- **Language:** Python (Flask)
-- **Containerization:** Docker
-- **CI/CD:** GitHub Actions
-- **Testing:** Pytest
-- **Registry:** GitHub Container Registry (GHCR)
+The pipeline automatically builds the Docker image, runs tests, and generates a **coverage report** on every push.
 
 
 ## Project Structure
-ci-cd-pipeline-docker/
-│── app/
-│   └── __init__.py        # Flask application
-│── tests/
-│   └── test_app.py        # Unit tests (Pytest)
-│── requirements.txt       # Dependencies
-│── Dockerfile             # Docker build file
-│── .dockerignore          # Docker ignore rules
-│── .github/
-│   └── workflows/
-│       └── ci.yml         # GitHub Actions pipeline
-│── README.md              # Project documentation
+cicd-pipeline-docker/
+│
+├── app/
+│ └── init.py # Flask application
+│
+├── tests/
+│ └── test_app.py # Pytest test cases
+│
+├── Dockerfile # Docker configuration
+├── requirements.txt # Python dependencies
+├── .github/
+│ └── workflows/ci.yml # GitHub Actions workflow
+└── README.md
 
 
-## Getting Started (Local Setup)
-# Clone Repository
-git clone https://github.com/<YOUR_USERNAME>/ci-cd-pipeline-docker.git
-cd ci-cd-pipeline-docker
 
-# Create Virtual Environment & Install Dependencies
-python3 -m venv venv
-source venv/bin/activate   # (Windows: venv\Scripts\activate)
-pip install -r requirements.txt
+## Getting Started
+1. Clone the repository
 
-# Run Tests
-pytest -q
+- git clone https://github.com/DeepaliBhosle/ci-cd-github-actions-pipeline.git
+- cd ci-cd-github-actions-pipeline
 
-#Run Application (Local Dev)
-export FLASK_APP=app
-flask run --host=0.0.0.0 --port=5000
-( App runs at: http://localhost:5000 )
+2. Set up Python virtual environment
+- python -m venv venv
+- source venv/bin/activate       (Linux/Mac)
+- venv\Scripts\activate          (Windows)
+- pip install -r requirements.txt
 
-## Docker Setup
-# Build Docker Image
-docker build -t ci-cd-pipeline-docker:local .
+3. Run Flask App locally
+- export FLASK_APP=app
+- flask run
+  ( Visit: http://127.0.0.1:5000 )
 
-# Run Docker Container
-docker run --rm -p 5000:5000 ci-cd-pipeline-docker:local
+4. Run Tests and Generate Coverage
+- pytest --cov=app --cov-report html
 
-## GitHub Actions CI/CD Workflow
-Runs automatically on:
-                       push to main
-                       pull_request to main
-Jobs:
-  Test → Install dependencies & run Pytest
-  Build & Push → Build Docker image & push to GHCR
+5. Open the HTML coverage report
+- code htmlcov/index.html     (VS Code)
+                or
+- firefox htmlcov/index.html  (Browser)
+
+
+6. Docker Setup
+
+# Build Docker image:
+- docker build -t cicd-pipeline-docker .
+# Run Docker container:
+- docker run -p 5000:5000 cicd-pipeline-docker
+(Access the app via: http://127.0.0.1:5000)
+
+7. GitHub Actions CI/CD
+- Workflow triggers on push to main branch.
+  
+- Steps:
+1. Checkout code.
+2. Set up Python environment.
+3. Install dependencies.
+4. Run tests with coverage.
+5. Build Docker image.
+   
+- Workflow Screenshot:
+
+
+8. Achievements
+- Fully containerized Python Flask application using Docker.
+- CI/CD workflow using GitHub Actions.
+- Automated testing and 100% code coverage with pytest-cov.
+- Professional project structure ready for portfolio showcase.
+
+
+
+
+
