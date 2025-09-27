@@ -1,22 +1,19 @@
-# Use slim Python image
-FROM python:3.12-slim
+# Base image
+FROM python:3.9-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy requirements
+# Copy and install dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt \
-    && pip install --no-cache-dir pytest flake8 black
+# Copy all project files
+COPY . .
 
-# Copy app and tests
-COPY app/ app/
-COPY tests/ tests/
-
-# Expose Flask port
+# Expose the port your app runs on
 EXPOSE 5000
 
-# Default command to run the app
-CMD ["python", "-m", "flask", "--app", "app", "run", "--host=0.0.0.0"]
+# Command to run the app
+CMD ["python", "app.py"]
+
