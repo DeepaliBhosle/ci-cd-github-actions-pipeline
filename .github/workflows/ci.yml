@@ -1,4 +1,4 @@
-name: CI Pipeline (Dockerized)
+name: CI Pipeline (Dockerized with Coverage)
 
 on:
   push:
@@ -11,22 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️ Checkout repository
+      # 1️ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️ Build Docker image (includes app + dev tools)
+      # 2️ Build Docker image (app + dev tools)
       - name: Build Docker image
         run: docker build -t myapp .
 
-      # 3️ Run linting (flake8) inside Docker
+      # 3️ Lint code
       - name: Lint code with flake8
         run: docker run --rm myapp flake8 app tests
 
-      # 4️ Check code formatting (black) inside Docker
+      # 4️ Check code formatting
       - name: Check formatting with black
         run: docker run --rm myapp black --check app tests
 
-      # 5️ Run tests (pytest) inside Docker
-      - name: Run tests with pytest
-        run: docker run --rm myapp pytest --maxfail=1 --disable-warnings -q
+      # 5️ Run tests with coverage
+      - name: Run tests with pytest and coverage
+        run: docker run --rm -v ${{ github.workspace }}/coverage:/app/coverage myapp pytest --cov=app --cov-report html:coverage/html --maxfail=1 --disable-warnings -q
+
+      # 6️ Upload coverage HTML as artifact
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/html
