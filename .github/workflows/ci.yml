@@ -40,7 +40,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest coverage flake8 black
-          # Docker is already installed on the runner; no need to install manually
+          # Docker is pre-installed on ubuntu-latest; no need to install manually
 
       # 5️⃣ Run tests with coverage
       - name: Run tests with coverage
@@ -67,11 +67,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 9️⃣ Build and push Docker image
+      # 9️⃣ Build and push Docker image (lowercase repo name)
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/deepalibhosle/ci-cd-github-actions-pipeline:latest
+        run: |
+          docker build -t ghcr.io/${{ github.repository,, }}:latest .
+          docker push ghcr.io/${{ github.repository,, }}:latest
 
