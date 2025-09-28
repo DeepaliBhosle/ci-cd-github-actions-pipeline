@@ -39,7 +39,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest coverage flake8 black
+          sudo apt-get update
+          sudo apt-get remove -y containerd
+          sudo apt-get install -y docker.io
+
 
       # 5 Run tests with coverage
       - name: Run tests with coverage
